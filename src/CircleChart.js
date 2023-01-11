@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { select } from "d3";
 
+import "./CircleChart.css";
+
 export const CircleChart = () => {
   // sample data
   const [data, setData] = useState([5, 10, 15, 20, 25]);
