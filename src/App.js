@@ -1,5 +1,5 @@
-import { CircleChart } from "./CircleChart";
-import { Diagram2 } from "./Diagram2";
+import { CircleChart } from "./components/CircleChart";
+import { Diagram2 } from "./components/Diagram2";
 
 function App() {
   return (
