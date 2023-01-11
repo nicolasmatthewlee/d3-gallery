@@ -56,7 +56,7 @@ export const CircleChart = () => {
   // ^^ above ^^ use data dependency to be called when data changes
 
   return (
-    <div>
+    <div className="circle-chart">
       {/* the ref attribute allows the React element to be accessed
       through svgRef.current */}
       <svg ref={svgRef}></svg>
