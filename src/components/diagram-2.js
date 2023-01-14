@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { select } from "d3";
 
-import "./styles/Diagram2.css";
+import "./styles/diagram-2.css";
 
 export const Diagram2 = () => {
   // useRef accepts one argument as the initial value and returns
