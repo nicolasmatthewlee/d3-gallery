@@ -4,12 +4,13 @@ import { CitiesChart } from "./components/cities-chart";
 import { LineChart } from "./components/line-chart";
 import { AxesScalesChart } from "./components/axes-scales-chart";
 
+import "./components/styles/app.css";
+
 function App() {
   return (
     <div className="App">
       <CircleChart />
       <Diagram2 />
-      <CitiesChart />
       <LineChart />
       <AxesScalesChart />
     </div>
