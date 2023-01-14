@@ -1,8 +1,10 @@
-import { select, csv } from "d3";
+import { select, csv, json } from "d3";
 
-import data from "../cities.csv";
+import citiesData from "../cities.csv";
+import tweetData from "../tweets.json";
 
 export const CitiesChart = () => {
-  csv(data, (data) => console.log(data));
+  // csv(citiesData, (data) => console.log(data));
+  // console.log(tweetData.tweets);
   return <div className="cities-chart"></div>;
 };
