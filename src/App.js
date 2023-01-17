@@ -6,6 +6,7 @@ import { AxesScalesChart } from "./components/axes-scales-chart";
 import { AnimatedBarChart } from "./components/animated-bar-chart";
 import { InteractiveBarChart } from "./components/interactive-bar-chart";
 import { ResponsiveBarChart } from "./components/responsive-bar-chart";
+import { RacingBarChart } from "./components/racing-bar-chart";
 
 import "./components/styles/app.css";
 
@@ -18,6 +19,7 @@ function App() {
       <AnimatedBarChart />
       <InteractiveBarChart />
       <ResponsiveBarChart />
+      <RacingBarChart />
     </div>
   );
 }
