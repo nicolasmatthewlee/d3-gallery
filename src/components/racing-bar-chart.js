@@ -74,7 +74,11 @@ export const RacingBarChart = () => {
     svg
       .selectAll(".label")
       .data(data, (obj, i) => obj.color)
-      .join("text")
+      .join((enter) =>
+        enter
+          .append("text")
+          .attr("y", (n, i) => yScale(i) + yScale.bandwidth() - 4)
+      )
       .text((obj) => obj.value)
       .attr("class", "label")
       .attr("x", "4px")
