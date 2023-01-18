@@ -25,7 +25,7 @@ export const RacingBarChart = () => {
           }))
         );
       }
-    }, 100);
+    }, 500);
     return () => clearInterval(interval);
   });
 
@@ -45,16 +45,28 @@ export const RacingBarChart = () => {
       .domain([0, Math.max(...data.map((obj) => obj.value))])
       .range([0, 300]);
 
+    // below: data() 2nd argument sets how to connect data to elements
+    // match data not by index(default, but by unique color)
+    // to get transition to apply to y
+
+    // below: join() add attributes for y and width to append so
+    // the transition doesn't run when the page is first loaded
     svg
       .selectAll(".bar")
-      .data(data)
-      .join("rect")
+      .data(data, (obj, i) => obj.color)
+      .join((enter) =>
+        enter
+          .append("rect")
+          .attr("y", (n, i) => yScale(i))
+          .attr("width", (n) => xScale(n.value))
+      )
       .attr("class", "bar")
       .attr("x", 0)
-      .attr("y", (n, i) => yScale(i))
-      .attr("width", (n) => xScale(n.value))
+      .style("fill", (n) => n.color)
       .attr("height", yScale.bandwidth())
-      .style("fill", (n) => n.color);
+      .transition()
+      .attr("y", (n, i) => yScale(i))
+      .attr("width", (n) => xScale(n.value));
   }, [data]);
 
   return (
