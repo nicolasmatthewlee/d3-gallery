@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { scaleBand, scaleLinear, select } from "d3";
+import { axisBottom, scaleBand, scaleLinear, select, svg } from "d3";
 
 export const RacingBarChart = () => {
   const [data, setData] = useState([
@@ -51,6 +51,8 @@ export const RacingBarChart = () => {
 
     // below: join() add attributes for y and width to append so
     // the transition doesn't run when the page is first loaded
+
+    // draw bars
     svg
       .selectAll(".bar")
       .data(data, (obj, i) => obj.color)
@@ -67,12 +69,34 @@ export const RacingBarChart = () => {
       .transition()
       .attr("y", (n, i) => yScale(i))
       .attr("width", (n) => xScale(n.value));
+
+    // draw labels
+    svg
+      .selectAll(".label")
+      .data(data, (obj, i) => obj.color)
+      .join("text")
+      .text((obj) => obj.value)
+      .attr("class", "label")
+      .attr("x", "4px")
+      .style("fill", "white")
+      .attr("font-family", "system-ui")
+      .transition()
+      .attr("y", (n, i) => yScale(i) + yScale.bandwidth() - 4);
+
+    // draw x-axis
+    const xAxis = axisBottom(xScale);
+    svg
+      .select(".x-axis")
+      .style("transform", `translateY(150px)`)
+      .transition()
+      .call(xAxis);
   }, [data]);
 
   return (
     <div>
-      <h1>{data.map((n) => n.value + " ")}</h1>
-      <svg ref={svgRef} className="chart"></svg>
+      <svg ref={svgRef} className="chart">
+        <g className="x-axis"></g>
+      </svg>
       <button
         onClick={(e) => {
           setPlay(!play);
