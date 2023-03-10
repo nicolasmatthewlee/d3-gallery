@@ -7,6 +7,7 @@ import { AnimatedBarChart } from "./components/animated-bar-chart";
 import { InteractiveBarChart } from "./components/interactive-bar-chart";
 import { ResponsiveBarChart } from "./components/responsive-bar-chart";
 import { RacingBarChart } from "./components/racing-bar-chart";
+import { ScatterPlot } from "./components/scatter-plot";
 
 import "./components/styles/app.css";
 
@@ -20,6 +21,7 @@ function App() {
       <InteractiveBarChart />
       <ResponsiveBarChart />
       <RacingBarChart />
+      <ScatterPlot />
     </div>
   );
 }
