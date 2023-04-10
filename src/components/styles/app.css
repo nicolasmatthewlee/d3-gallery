@@ -1,9 +1,0 @@
-.App {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit,320px);
-    /* ^^ 320px to account for margin */
-    gap: 20px;
-
-    justify-content: center;
-}

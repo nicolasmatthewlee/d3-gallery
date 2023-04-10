@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { select } from "d3";
 
-import "./styles/diagram-2.css";
-
 export const Diagram2 = () => {
   // useRef accepts one argument as the initial value and returns
   // a reference; reference.current accesses the reference value and
@@ -50,7 +48,11 @@ export const Diagram2 = () => {
       .text((value) => `(100, ${value})`)
       .style("opacity", 0);
 
-    svg.selectAll("text").transition().duration(200).style("opacity", 1);
+    svg
+      .selectAll("text")
+      .transition()
+      .duration(200)
+      .style("opacity", 1);
   }, [data]);
 
   return (

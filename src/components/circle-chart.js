@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { select } from "d3";
 
-import "./styles/circle-chart.css";
-
 export const CircleChart = () => {
   // sample data
   const [data, setData] = useState([5, 10, 15, 20, 25]);
@@ -65,7 +63,9 @@ export const CircleChart = () => {
         Update data
       </button>
       <br />
-      <button onClick={() => setData(data.filter((value) => value < 35))}>
+      <button
+        onClick={() => setData(data.filter((value) => value < 35))}
+      >
         Filter data
       </button>
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { select, scaleLinear } from "d3";
+import { Button } from "./button";
 
 export const ScatterPlot = () => {
   const generateData = (n) => {
@@ -95,19 +96,10 @@ export const ScatterPlot = () => {
           defaultValue={100}
           onChange={(e) => setSlider(e.target.value)}
         ></input>
-        <button
-          style={{
-            backgroundColor: "white",
-            border: "1px solid black",
-            padding: "6px 10px 6px 10px",
-            fontFamily: "monospace",
-          }}
-          onClick={() => {
-            setData(generateData(slider));
-          }}
-        >
-          generate data
-        </button>
+        <Button
+          onClick={() => setData(generateData(slider))}
+          text="generate data"
+        />
       </div>
     </div>
   );

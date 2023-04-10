@@ -9,8 +9,6 @@ import {
 
 import ResizeObserver from "resize-observer-polyfill";
 
-import "./styles/chart.css";
-
 // custom React hook
 // receives a reference and returns a width and height
 const useResizeObserver = (ref) => {

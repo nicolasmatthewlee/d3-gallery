@@ -7,8 +7,6 @@ import {
 } from "d3";
 import { useState, useRef, useEffect } from "react";
 
-import "./styles/chart.css";
-
 export const AnimatedBarChart = () => {
   const svgRef = useRef();
   const [data, setData] = useState([10, 35, 50, 65, 80, 95]);

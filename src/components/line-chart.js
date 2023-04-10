@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { select, line, curveCardinal } from "d3";
 
-import "./styles/chart.css";
-
 export const LineChart = () => {
-  const [data, setData] = useState([1, 35, 4, 60, 20, 1.5, 13, 75, 89, 32]);
+  const [data, setData] = useState([
+    1, 35, 4, 60, 20, 1.5, 13, 75, 89, 32,
+  ]);
   const svgRef = useRef();
 
   useEffect(() => {

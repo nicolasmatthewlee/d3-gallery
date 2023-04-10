@@ -7,8 +7,6 @@ import {
   axisRight,
 } from "d3";
 
-import "./styles/chart.css";
-
 export const InteractiveBarChart = () => {
   const [data, setData] = useState([10, 20, 30, 40, 50]);
   const svgRef = useRef();
