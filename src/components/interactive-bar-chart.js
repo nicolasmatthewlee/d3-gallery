@@ -7,6 +7,8 @@ import {
   axisRight,
 } from "d3";
 
+import Button from "./button";
+
 export const InteractiveBarChart = () => {
   const [data, setData] = useState([10, 20, 30, 40, 50]);
   const svgRef = useRef();
@@ -73,25 +75,25 @@ export const InteractiveBarChart = () => {
 
   return (
     <div>
-      <svg className="chart" ref={svgRef}>
+      <h3>Interactive Bar Chart</h3>
+      <svg ref={svgRef} className="overflow-visible pb-[30px]">
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>
-      <button
-        onClick={() =>
-          setData(data.map(() => Math.floor(Math.random() * 100)))
-        }
-      >
-        Generate new data
-      </button>
-      <br />
-      <button
-        onClick={() =>
-          setData(data.concat(Math.floor(Math.random() * 100)))
-        }
-      >
-        Add Data
-      </button>
+      <div className="flex space-x-[10px]">
+        <Button
+          text="Generate new data"
+          onClick={() =>
+            setData(data.map(() => Math.floor(Math.random() * 100)))
+          }
+        />
+        <Button
+          text="Add data"
+          onClick={() =>
+            setData(data.concat(Math.floor(Math.random() * 100)))
+          }
+        />
+      </div>
     </div>
   );
 };

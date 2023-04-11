@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { select, scaleLinear } from "d3";
-import { Button } from "./button";
+import Button from "./button";
 
 export const ScatterPlot = () => {
   const generateData = (n) => {
@@ -23,8 +23,13 @@ export const ScatterPlot = () => {
   useEffect(() => {
     const svg = select(svgRef.current);
 
-    const xScale = scaleLinear().domain([0, 100]).range([0, width]);
-    const yScale = scaleLinear().domain([0, 100]).range([0, height]);
+    const radius = 7;
+    const xScale = scaleLinear()
+      .domain([0, 100])
+      .range([radius + 2, width - (radius + 2)]); // 2 accounts for stroke-width
+    const yScale = scaleLinear()
+      .domain([0, 100])
+      .range([radius + 2, height - (radius + 2)]);
 
     svg
       .selectAll(".dot")
@@ -33,7 +38,7 @@ export const ScatterPlot = () => {
       .attr("class", "dot")
       .attr("cx", (d) => xScale(d[0]))
       .attr("cy", (d) => yScale(d[1]))
-      .attr("r", 7)
+      .attr("r", radius)
       .style("fill", "rgb(255,0,0)")
       .style("stroke-width", "1px")
       .style("stroke", "white")
@@ -73,19 +78,17 @@ export const ScatterPlot = () => {
         svg.selectAll(".data-label-rect").remove();
         svg.selectAll(".dot").style("fill", "red");
       });
-  }, [data]);
+  }, [data, height, width]);
 
   return (
     <div>
+      <h3 className="mb-[10px]">Scatter Plot</h3>
       <svg
+        className="border-[2px] border-red-500 overflow-visible rounded-sm"
         height={height}
         width={width}
         ref={svgRef}
-        style={{
-          border: "3px solid whitesmoke",
-          borderRadius: "5px",
-        }}
-      ></svg>
+      />
       <div
         style={{ display: "flex", paddingTop: "10px", gap: "10px" }}
       >
@@ -98,7 +101,7 @@ export const ScatterPlot = () => {
         ></input>
         <Button
           onClick={() => setData(generateData(slider))}
-          text="generate data"
+          text="Generate new data"
         />
       </div>
     </div>

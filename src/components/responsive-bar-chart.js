@@ -8,6 +8,7 @@ import {
 } from "d3";
 
 import ResizeObserver from "resize-observer-polyfill";
+import Button from "./button";
 
 // custom React hook
 // receives a reference and returns a width and height
@@ -106,28 +107,30 @@ export const ResponsiveBarChart = () => {
   }, [data, dimensions]);
 
   return (
-    <div className="resizable">
-      <div className="svg-container">
-        <svg className="chart" ref={svgRef}>
-          <g className="x-axis" />
-          <g className="y-axis" />
-        </svg>
+    <div>
+      <h3>Responsive Bar Chart</h3>
+      <svg
+        className="overflow-visible pb-[30px] w-full pr-[30px]"
+        ref={svgRef}
+      >
+        <g className="x-axis" />
+        <g className="y-axis" />
+      </svg>
+
+      <div className="space-x-[10px]">
+        <Button
+          text="Generate new data"
+          onClick={() =>
+            setData(data.map(() => Math.floor(Math.random() * 100)))
+          }
+        />
+        <Button
+          text="Add data"
+          onClick={() =>
+            setData(data.concat(Math.floor(Math.random() * 100)))
+          }
+        />
       </div>
-      <button
-        onClick={() =>
-          setData(data.map(() => Math.floor(Math.random() * 100)))
-        }
-      >
-        Generate new data
-      </button>
-      <br />
-      <button
-        onClick={() =>
-          setData(data.concat(Math.floor(Math.random() * 100)))
-        }
-      >
-        Add Data
-      </button>
     </div>
   );
 };

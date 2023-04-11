@@ -6,7 +6,10 @@ import { ScatterPlot } from "./components/scatter-plot";
 
 function App() {
   return (
-    <div className="p-[30px] space-y-[30px] flex-col">
+    <div
+      className="p-[30px] space-y-[45px] flex-col
+    md:columns-2 md:gap-x-[45px]"
+    >
       <AnimatedBarChart />
       <InteractiveBarChart />
       <ResponsiveBarChart />

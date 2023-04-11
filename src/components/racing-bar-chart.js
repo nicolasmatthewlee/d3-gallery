@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
-import { axisBottom, scaleBand, scaleLinear, select, svg } from "d3";
+import { axisBottom, scaleBand, scaleLinear, select } from "d3";
+import Button from "./button";
 
 export const RacingBarChart = () => {
   const [data, setData] = useState([
@@ -98,16 +99,17 @@ export const RacingBarChart = () => {
 
   return (
     <div>
-      <svg ref={svgRef} className="chart">
+      <h3>Racing Bar Chart</h3>
+      <svg ref={svgRef} className="overflow-visible pb-[30px]">
         <g className="x-axis"></g>
       </svg>
-      <button
+
+      <Button
+        text={play ? "Pause" : "Play"}
         onClick={(e) => {
           setPlay(!play);
         }}
-      >
-        {play ? "Pause" : "Play"}
-      </button>
+      />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import {
   axisRight,
 } from "d3";
 import { useState, useRef, useEffect } from "react";
+import Button from "./button";
 
 export const AnimatedBarChart = () => {
   const svgRef = useRef();
@@ -61,16 +62,16 @@ export const AnimatedBarChart = () => {
 
   return (
     <div>
-      <svg className="chart" ref={svgRef}>
+      <h3>Animated Bar Chart</h3>
+      <svg className="overflow-visible pb-[30px]" ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>
-      <br />
-      <button
+
+      <Button
         onClick={() => setData(data.map((n) => Math.random() * 100))}
-      >
-        Generate new data
-      </button>
+        text="Generate new data"
+      />
     </div>
   );
 };
