@@ -2,7 +2,7 @@ import { AnimatedBarChart } from "./components/animated-bar-chart";
 import { InteractiveBarChart } from "./components/interactive-bar-chart";
 import { ResponsiveBarChart } from "./components/responsive-bar-chart";
 import { RacingBarChart } from "./components/racing-bar-chart";
-import { ScatterPlot } from "./components/scatter-plot";
+import { ScatterPlot } from "./components/scatter-plot.tsx";
 
 function App() {
   return (
