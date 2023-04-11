@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, RefObject } from "react";
 import {
   select,
   scaleBand,
@@ -12,19 +12,22 @@ import Button from "./button";
 
 // custom React hook
 // receives a reference and returns a width and height
-const useResizeObserver = (ref) => {
-  const [dimensions, setDimensions] = useState(null);
+const useResizeObserver = (ref: RefObject<Element>) => {
+  const [dimensions, setDimensions] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
   useEffect(() => {
     const observeTarget = ref.current;
     const resizeObserver = new ResizeObserver((entries) => {
       // set resized dimensions
       setDimensions(entries[0].contentRect);
     });
-    resizeObserver.observe(observeTarget);
+    if (observeTarget) resizeObserver.observe(observeTarget);
 
     // cleanup
     return () => {
-      resizeObserver.unobserve(observeTarget);
+      if (observeTarget) resizeObserver.unobserve(observeTarget);
     };
   }, [ref]);
   return dimensions;
@@ -32,12 +35,13 @@ const useResizeObserver = (ref) => {
 
 export const ResponsiveBarChart = () => {
   const [data, setData] = useState([10, 20, 30, 40, 50]);
-  const svgRef = useRef();
+  const svgContainerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   // use custom react hook to get dimensions of svg
   // after each render
   // (css width set to 100%)
-  const dimensions = useResizeObserver(svgRef);
+  const dimensions = useResizeObserver(svgContainerRef);
 
   useEffect(() => {
     // for initial load where there are no dimensions:
@@ -61,7 +65,7 @@ export const ResponsiveBarChart = () => {
       .range([dimensions.height, 0]);
 
     // create x-axis
-    const xAxis = axisBottom(xScale).tickFormat((i) => i + 1);
+    const xAxis = axisBottom(xScale).tickFormat((i: number) => i + 1);
     svg
       .select(".x-axis")
       .style("transform", `translateY(${dimensions.height}px)`)
@@ -82,25 +86,28 @@ export const ResponsiveBarChart = () => {
       .style("transform", "scale(1,-1)")
       .attr("class", "bar")
       .attr("width", xScale.bandwidth())
-      .attr("x", (_, i) => xScale(i))
+      .attr("x", (_: number, i: number) => xScale(i))
       .attr("y", -dimensions.height)
       // on() must be set before transition
-      .on("mouseenter", (event, value) => {
-        svg
-          .selectAll(".data-label")
-          .data([value])
-          .join("text")
-          .attr("class", "data-label")
-          .text(value)
-          .attr(
-            "x",
-            event.target.x.baseVal.value + xScale.bandwidth() / 2
-          )
-          .attr("text-anchor", "middle")
-          .attr("y", yAxisScale(value) - 5)
-          .transition()
-          .attr("opacity", 1);
-      })
+      .on(
+        "mouseenter",
+        (event: React.ChangeEvent<SVGSVGElement>, value: number) => {
+          svg
+            .selectAll(".data-label")
+            .data([value])
+            .join("text")
+            .attr("class", "data-label")
+            .text(value)
+            .attr(
+              "x",
+              event.target.x.baseVal.value + xScale.bandwidth() / 2
+            )
+            .attr("text-anchor", "middle")
+            .attr("y", yAxisScale(value) - 5)
+            .transition()
+            .attr("opacity", 1);
+        }
+      )
       .on("mouseleave", () => svg.select(".data-label").remove())
       .transition()
       .attr("height", yScale);
@@ -109,13 +116,12 @@ export const ResponsiveBarChart = () => {
   return (
     <div>
       <h3>Responsive Bar Chart</h3>
-      <svg
-        className="overflow-visible pb-[30px] w-full pr-[30px]"
-        ref={svgRef}
-      >
-        <g className="x-axis" />
-        <g className="y-axis" />
-      </svg>
+      <div ref={svgContainerRef} className="pr-[30px] pb-[30px]">
+        <svg className="overflow-visible w-full" ref={svgRef}>
+          <g className="x-axis" />
+          <g className="y-axis" />
+        </svg>
+      </div>
 
       <div className="space-x-[10px]">
         <Button

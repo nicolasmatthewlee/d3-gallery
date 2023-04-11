@@ -2,8 +2,13 @@ import { useRef, useEffect, useState } from "react";
 import { axisBottom, scaleBand, scaleLinear, select } from "d3";
 import Button from "./button";
 
+interface DataObject {
+  color: string;
+  value: number;
+}
+
 export const RacingBarChart = () => {
-  const [data, setData] = useState([
+  const [data, setData] = useState<DataObject[]>([
     { color: "red", value: 1 },
     { color: "blue", value: 2 },
     { color: "green", value: 3 },
@@ -13,7 +18,7 @@ export const RacingBarChart = () => {
 
   const [play, setPlay] = useState(false);
 
-  const svgRef = useRef();
+  const svgRef = useRef<SVGSVGElement>(null);
 
   // update data with setInterval
   useEffect(() => {
@@ -56,37 +61,45 @@ export const RacingBarChart = () => {
     // draw bars
     svg
       .selectAll(".bar")
-      .data(data, (obj, i) => obj.color)
-      .join((enter) =>
+      .data(data, (obj: DataObject, i: number) => obj.color)
+      .join((enter: any) =>
         enter
           .append("rect")
-          .attr("y", (n, i) => yScale(i))
-          .attr("width", (n) => xScale(n.value))
+          .attr("y", (n: DataObject, i: number) => yScale(i))
+          .attr("width", (n: DataObject) => xScale(n.value))
       )
       .attr("class", "bar")
       .attr("x", 0)
-      .style("fill", (n) => n.color)
+      .style("fill", (n: DataObject) => n.color)
       .attr("height", yScale.bandwidth())
       .transition()
-      .attr("y", (n, i) => yScale(i))
-      .attr("width", (n) => xScale(n.value));
+      .attr("y", (n: DataObject, i: number) => yScale(i))
+      .attr("width", (n: DataObject) => xScale(n.value));
 
     // draw labels
     svg
       .selectAll(".label")
-      .data(data, (obj, i) => obj.color)
-      .join((enter) =>
+      .data(data, (obj: DataObject, i: number) => obj.color)
+      .join((enter: any) =>
         enter
           .append("text")
-          .attr("y", (n, i) => yScale(i) + yScale.bandwidth() - 4)
+          .attr(
+            "y",
+            (n: DataObject, i: number) =>
+              yScale(i) + yScale.bandwidth() - 4
+          )
       )
-      .text((obj) => obj.value)
+      .text((obj: DataObject) => obj.value)
       .attr("class", "label")
       .attr("x", "4px")
       .style("fill", "white")
       .attr("font-family", "system-ui")
       .transition()
-      .attr("y", (n, i) => yScale(i) + yScale.bandwidth() - 4);
+      .attr(
+        "y",
+        (n: DataObject, i: number) =>
+          yScale(i) + yScale.bandwidth() - 4
+      );
 
     // draw x-axis
     const xAxis = axisBottom(xScale);
@@ -106,7 +119,7 @@ export const RacingBarChart = () => {
 
       <Button
         text={play ? "Pause" : "Play"}
-        onClick={(e) => {
+        onClick={() => {
           setPlay(!play);
         }}
       />

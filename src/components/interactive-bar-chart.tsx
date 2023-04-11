@@ -11,7 +11,7 @@ import Button from "./button";
 
 export const InteractiveBarChart = () => {
   const [data, setData] = useState([10, 20, 30, 40, 50]);
-  const svgRef = useRef();
+  const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const svg = select(svgRef.current);
@@ -28,7 +28,7 @@ export const InteractiveBarChart = () => {
     const yAxisScale = scaleLinear().domain([0, 100]).range([150, 0]);
 
     // create x-axis
-    const xAxis = axisBottom(xScale).tickFormat((i) => i + 1);
+    const xAxis = axisBottom(xScale).tickFormat((i: number) => i + 1);
     svg
       .select(".x-axis")
       .style("transform", "translateY(150px)")
@@ -49,25 +49,28 @@ export const InteractiveBarChart = () => {
       .style("transform", "scale(1,-1)")
       .attr("class", "bar")
       .attr("width", xScale.bandwidth())
-      .attr("x", (_, i) => xScale(i))
+      .attr("x", (_: number, i: number) => xScale(i))
       .attr("y", -150)
       // on() must be set before transition
-      .on("mouseenter", (event, value) => {
-        svg
-          .selectAll(".data-label")
-          .data([value])
-          .join("text")
-          .attr("class", "data-label")
-          .text(value)
-          .attr(
-            "x",
-            event.target.x.baseVal.value + xScale.bandwidth() / 2
-          )
-          .attr("text-anchor", "middle")
-          .attr("y", yAxisScale(value) - 5)
-          .transition()
-          .attr("opacity", 1);
-      })
+      .on(
+        "mouseenter",
+        (event: React.ChangeEvent<SVGSVGElement>, value: number) => {
+          svg
+            .selectAll(".data-label")
+            .data([value])
+            .join("text")
+            .attr("class", "data-label")
+            .text(value)
+            .attr(
+              "x",
+              event.target.x.baseVal.value + xScale.bandwidth() / 2
+            )
+            .attr("text-anchor", "middle")
+            .attr("y", yAxisScale(value) - 5)
+            .transition()
+            .attr("opacity", 1);
+        }
+      )
       .on("mouseleave", () => svg.select(".data-label").remove())
       .transition()
       .attr("height", yScale);

@@ -9,7 +9,7 @@ import { useState, useRef, useEffect } from "react";
 import Button from "./button";
 
 export const AnimatedBarChart = () => {
-  const svgRef = useRef();
+  const svgRef = useRef<SVGSVGElement>(null);
   const [data, setData] = useState([10, 35, 50, 65, 80, 95]);
 
   useEffect(() => {
@@ -50,14 +50,14 @@ export const AnimatedBarChart = () => {
       .data(data)
       .join("rect")
       .attr("class", "bar")
-      .attr("value", (v) => v)
+      .attr("value", (v: number) => v)
       .style("transform", "scale(1,-1)") // switches orientation of y-axis
-      .attr("x", (v, i) => xScale(i))
+      .attr("x", (v: number, i: number) => xScale(i))
       .attr("width", xScale.bandwidth())
       .attr("y", -150)
       .transition()
-      .attr("fill", (v) => colorScale(v))
-      .attr("height", (v) => 150 - yScale(v)); // the property to be transitioned must come after transition()
+      .attr("fill", (v: number) => colorScale(v))
+      .attr("height", (v: number) => 150 - yScale(v)); // the property to be transitioned must come after transition()
   }, [data]);
 
   return (
