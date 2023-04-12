@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { axisBottom, scaleBand, scaleLinear, select } from "d3";
 import Button from "./button";
+import { useResizeObserver } from "../graph-utilities";
 
 interface DataObject {
   color: string;
@@ -9,18 +10,19 @@ interface DataObject {
 
 export const RacingBarChart = () => {
   const [data, setData] = useState<DataObject[]>([
-    { color: "red", value: 1 },
-    { color: "blue", value: 2 },
-    { color: "green", value: 3 },
-    { color: "orange", value: 4 },
-    { color: "purple", value: 5 },
+    { color: "#ff006e", value: 1 },
+    { color: "#0062ff", value: 2 },
+    { color: "#ff8405", value: 3 },
+    { color: "#ffbe0a", value: 4 },
+    { color: "#6113cd", value: 5 },
   ]);
 
   const [play, setPlay] = useState(false);
 
   const svgRef = useRef<SVGSVGElement>(null);
+  const svgContainerRef = useRef<HTMLDivElement>(null);
+  const dimensions = useResizeObserver(svgContainerRef);
 
-  // update data with setInterval
   useEffect(() => {
     const interval = setInterval(() => {
       if (play) {
@@ -36,6 +38,8 @@ export const RacingBarChart = () => {
   });
 
   useEffect(() => {
+    if (!dimensions) return;
+
     const svg = select(svgRef.current);
 
     // sort the data
@@ -49,7 +53,7 @@ export const RacingBarChart = () => {
 
     const xScale = scaleLinear()
       .domain([0, Math.max(...data.map((obj) => obj.value))])
-      .range([0, 300]);
+      .range([0, dimensions.width]);
 
     // below: data() 2nd argument sets how to connect data to elements
     // match data not by index(default, but by unique color)
@@ -98,7 +102,7 @@ export const RacingBarChart = () => {
       .attr(
         "y",
         (n: DataObject, i: number) =>
-          yScale(i) + yScale.bandwidth() - 4
+          yScale(i) + yScale.bandwidth() - 5
       );
 
     // draw x-axis
@@ -108,14 +112,19 @@ export const RacingBarChart = () => {
       .style("transform", `translateY(150px)`)
       .transition()
       .call(xAxis);
-  }, [data]);
+  }, [data, dimensions]);
 
   return (
     <div>
       <h3>Racing Bar Chart</h3>
-      <svg ref={svgRef} className="overflow-visible pb-[30px]">
-        <g className="x-axis"></g>
-      </svg>
+      <div ref={svgContainerRef}>
+        <svg
+          ref={svgRef}
+          className="overflow-visible pb-[30px] w-full"
+        >
+          <g className="x-axis"></g>
+        </svg>
+      </div>
 
       <Button
         text={play ? "Pause" : "Play"}
