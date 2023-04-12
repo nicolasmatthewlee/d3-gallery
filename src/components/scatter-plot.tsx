@@ -19,9 +19,6 @@ const ScatterPlot = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const svgContainerRef = useRef<HTMLDivElement>(null);
 
-  let height = 300;
-  let width = 300;
-
   const dimensions = useResizeObserver(svgContainerRef);
 
   useEffect(() => {
@@ -97,8 +94,6 @@ const ScatterPlot = () => {
       <div ref={svgContainerRef}>
         <svg
           className="border-[2px] border-red-500 overflow-visible rounded-sm w-full"
-          height={height}
-          width={width}
           ref={svgRef}
         />
       </div>
