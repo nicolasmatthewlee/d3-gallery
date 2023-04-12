@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { select, scaleLinear } from "d3";
 import Button from "./button";
+import { useResizeObserver } from "../graph-utilities";
 
 const ScatterPlot = () => {
   const generateData = (n: number) => {
@@ -16,20 +17,24 @@ const ScatterPlot = () => {
   const [data, setData] = useState(generateData(100));
   const [slider, setSlider] = useState(100);
   const svgRef = useRef<SVGSVGElement>(null);
+  const svgContainerRef = useRef<HTMLDivElement>(null);
 
   let height = 300;
   let width = 300;
 
+  const dimensions = useResizeObserver(svgContainerRef);
+
   useEffect(() => {
+    if (!dimensions) return;
     const svg = select(svgRef.current);
 
     const radius = 7;
     const xScale = scaleLinear()
       .domain([0, 100])
-      .range([radius + 2, width - (radius + 2)]); // 2 accounts for stroke-width
+      .range([radius + 2, dimensions.width - (radius + 2)]); // 2 accounts for stroke-width
     const yScale = scaleLinear()
       .domain([0, 100])
-      .range([radius + 2, height - (radius + 2)]);
+      .range([radius + 2, dimensions.height - (radius + 2)]);
 
     svg
       .selectAll(".dot")
@@ -84,17 +89,19 @@ const ScatterPlot = () => {
         svg.selectAll(".data-label-rect").remove();
         svg.selectAll(".dot").style("fill", "red");
       });
-  }, [data, height, width]);
+  }, [data, dimensions]);
 
   return (
     <div>
       <h3 className="mb-[10px]">Scatter Plot</h3>
-      <svg
-        className="border-[2px] border-red-500 overflow-visible rounded-sm"
-        height={height}
-        width={width}
-        ref={svgRef}
-      />
+      <div ref={svgContainerRef}>
+        <svg
+          className="border-[2px] border-red-500 overflow-visible rounded-sm w-full"
+          height={height}
+          width={width}
+          ref={svgRef}
+        />
+      </div>
       <div
         style={{ display: "flex", paddingTop: "10px", gap: "10px" }}
       >

@@ -5,8 +5,9 @@ import ScatterPlot from "./components/scatter-plot";
 function App() {
   return (
     <div
-      className="p-[30px] space-y-[45px]
-    md:columns-2 md:gap-x-[45px]"
+      className="p-[30px] gap-[30px] grid grid-flow-row
+    sm:grid-cols-2
+    lg:grid-cols-3"
     >
       <BarChart />
       <RacingBarChart />

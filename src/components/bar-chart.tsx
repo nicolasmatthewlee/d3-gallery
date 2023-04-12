@@ -92,7 +92,7 @@ const BarChart = () => {
 
   return (
     <div>
-      <h3>Responsive Bar Chart</h3>
+      <h3>Bar Chart</h3>
       <div ref={svgContainerRef} className="pr-[30px] pb-[30px]">
         <svg className="overflow-visible w-full" ref={svgRef}>
           <g className="x-axis" />
