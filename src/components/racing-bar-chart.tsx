@@ -8,7 +8,7 @@ interface DataObject {
   value: number;
 }
 
-export const RacingBarChart = () => {
+const RacingBarChart = () => {
   const [data, setData] = useState<DataObject[]>([
     { color: "#ff006e", value: 1 },
     { color: "#0062ff", value: 2 },
@@ -135,3 +135,5 @@ export const RacingBarChart = () => {
     </div>
   );
 };
+
+export default RacingBarChart;

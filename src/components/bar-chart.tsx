@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, RefObject } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   select,
   scaleBand,
@@ -7,33 +7,10 @@ import {
   axisRight,
 } from "d3";
 
-import ResizeObserver from "resize-observer-polyfill";
+import { useResizeObserver } from "../graph-utilities";
 import Button from "./button";
 
-// custom React hook
-// receives a reference and returns a width and height
-const useResizeObserver = (ref: RefObject<Element>) => {
-  const [dimensions, setDimensions] = useState<{
-    width: number;
-    height: number;
-  } | null>(null);
-  useEffect(() => {
-    const observeTarget = ref.current;
-    const resizeObserver = new ResizeObserver((entries) => {
-      // set resized dimensions
-      setDimensions(entries[0].contentRect);
-    });
-    if (observeTarget) resizeObserver.observe(observeTarget);
-
-    // cleanup
-    return () => {
-      if (observeTarget) resizeObserver.unobserve(observeTarget);
-    };
-  }, [ref]);
-  return dimensions;
-};
-
-export const ResponsiveBarChart = () => {
+const BarChart = () => {
   const [data, setData] = useState([10, 20, 30, 40, 50]);
   const svgContainerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -140,3 +117,5 @@ export const ResponsiveBarChart = () => {
     </div>
   );
 };
+
+export default BarChart;

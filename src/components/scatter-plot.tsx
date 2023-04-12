@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { select, scaleLinear } from "d3";
 import Button from "./button";
 
-export const ScatterPlot = () => {
+const ScatterPlot = () => {
   const generateData = (n: number) => {
     let data: number[][] = [];
     for (let i = 0; i < n; i += 1) {
@@ -113,3 +113,5 @@ export const ScatterPlot = () => {
     </div>
   );
 };
+
+export default ScatterPlot;

@@ -1,18 +1,14 @@
-import { AnimatedBarChart } from "./components/animated-bar-chart";
-import { InteractiveBarChart } from "./components/interactive-bar-chart";
-import { ResponsiveBarChart } from "./components/responsive-bar-chart";
-import { RacingBarChart } from "./components/racing-bar-chart";
-import { ScatterPlot } from "./components/scatter-plot";
+import BarChart from "./components/bar-chart";
+import RacingBarChart from "./components/racing-bar-chart";
+import ScatterPlot from "./components/scatter-plot";
 
 function App() {
   return (
     <div
-      className="p-[30px] space-y-[45px] flex-col
+      className="p-[30px] space-y-[45px]
     md:columns-2 md:gap-x-[45px]"
     >
-      <AnimatedBarChart />
-      <InteractiveBarChart />
-      <ResponsiveBarChart />
+      <BarChart />
       <RacingBarChart />
       <ScatterPlot />
     </div>
