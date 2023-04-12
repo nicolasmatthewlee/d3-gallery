@@ -1,4 +1,5 @@
 import BarChart from "./components/bar-chart";
+import { LineChart } from "./components/line-chart";
 import RacingBarChart from "./components/racing-bar-chart";
 import ScatterPlot from "./components/scatter-plot";
 
@@ -12,6 +13,7 @@ function App() {
       <BarChart />
       <RacingBarChart />
       <ScatterPlot />
+      <LineChart />
     </div>
   );
 }
